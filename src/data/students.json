@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "username": "student1",
+    "password": "student1pass",
+    "role": "student",
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthdate": "1995-06-15",
+    "standard": "10",
+    "division": "A",
+    "address": "123 Main St",
+    "photo": "photo1.jpg"
+  },
+  {
+    "id": 2,
+    "username": "stud",
+    "password": "stud",
+    "role": "student",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "birthdate": "1998-03-25",
+    "standard": "11",
+    "division": "B",
+    "address": "456 Elm St",
+    "photo": "photo2.jpg"
+  }
+]

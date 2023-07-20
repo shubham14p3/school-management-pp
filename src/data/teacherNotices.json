@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Staff Meeting",
+    "content": "There will be a staff meeting in the conference room at 3:00 PM.",
+    "date": "2023-07-20"
+  },
+  {
+    "id": 2,
+    "title": "Upcoming Holiday",
+    "content": "The school will remain closed on Friday due to a public holiday.",
+    "date": "2023-08-05"
+  }
+]
