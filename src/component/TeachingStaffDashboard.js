@@ -1,12 +1,11 @@
 // TeachingStaffDashboard.js
-import React from 'react';
+import React from "react";
+import Dashboard from "./Dashboard";
 
-const TeachingStaffDashboard = ({ handleLogout }) => {
+const TeachingStaffDashboard = ({ handleLogout, userType }) => {
   return (
     <div>
-      <h2>Welcome Teaching Staff!</h2>
-      {/* Add your Teaching Staff specific content here */}
-      <button onClick={handleLogout}>Logout</button>
+      <Dashboard handleLogout={handleLogout} userType={userType} />
     </div>
   );
 };
