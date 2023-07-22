@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -80,6 +79,25 @@ const App = () => {
     setShowModal(true);
   };
 
+  const handleAddStudent = (formData) => {
+    const { username } = formData;
+
+    // Check if the username already exists in students, teacherStaff, or admins arrays
+    const allUsernames = [
+      ...students.map((student) => student.username),
+      ...teachingStaff.map((staff) => staff.username),
+      ...admins.map((admin) => admin.username),
+    ];
+
+    if (allUsernames.includes(username)) {
+      setModalTitle("Warning");
+      setModalMessage(
+        "Username already exists. Please choose a different one."
+      );
+      setShowModal(true);
+      return;
+    }
+  };
   return (
     <Router>
       <Routes>
@@ -130,15 +148,27 @@ const App = () => {
         />
 
         {/* Route for adding a student */}
-        <Route
+        {/* <Route
           path="/add-student"
           element={
             <AddStudentForm students={students} setStudents={setStudents} />
           }
           when={loggedIn && userType === "admin"}
+        /> */}
+        <Route
+          path="/add-student"
+          element={
+            <AddStudentForm
+              handleAddStudent={handleAddStudent}
+              existingUsernames={[
+                ...students.map((student) => student.username),
+                ...teachingStaff.map((staff) => staff.username),
+                ...admins.map((admin) => admin.username),
+              ]}
+            />
+          }
+          when={loggedIn && userType === "admin"}
         />
-
-        {/* Route for viewing student notices */}
         <Route
           path="/student-notice"
           element={<StudentNotice studentNotices={studentNotices} />}
