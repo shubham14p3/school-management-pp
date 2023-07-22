@@ -87,6 +87,20 @@ const App = () => {
     setModalMessage("Student added successfully.");
     setShowModal(true);
   };
+  const handleEditStudent = (studentId, updatedData) => {
+    setStudents((prevStudents) => {
+      return prevStudents.map((student) =>
+        student.id === studentId ? { ...student, ...updatedData } : student
+      );
+    });
+  };
+
+  // Delete student
+  const handleDeleteStudent = (studentId) => {
+    setStudents((prevStudents) => {
+      return prevStudents.filter((student) => student.id !== studentId);
+    });
+  };
 
   return (
     <Router>
@@ -133,7 +147,13 @@ const App = () => {
         {/* Route for viewing students */}
         <Route
           path="/view-students"
-          element={<ViewStudents students={students} />}
+          element={
+            <ViewStudents
+              students={students}
+              handleEditStudent={handleEditStudent}
+              handleDeleteStudent={handleDeleteStudent}
+            />
+          }
           when={loggedIn && userType === "admin"}
         />
 

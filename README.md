@@ -68,3 +68,36 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+Create an Application for School Management. Where it contains: Login: We have three types of Users.
+
+1. Admin: This user having all access of CRUD operations in application. Add Student, Remove Student, Add Notice for Student, Add Notice for Teacher/Staff. 
+2. Teaching Staff: Add Notice for Student, Approve Leave Application of student, Assign Task to students.
+3. Student Apply Leave, View List of biotice, Notice Details, Task List and details
+
+Dashboard: It contains following tabs which are displays according to user access/role mentioned above. > Add Student: It contains form to create student which having below fields:
+
+1. First Nametmin 3 chars, max 10 chars, no special chars, no numbers allowed, required) 2. Last Name(min 3 chars, max 10 chars, no special chars, no numbers allowed, required)
+
+3. Birthdatef required, should not allow future date)
+
+4. Standard(required)
+
+5. division(required)
+
+6. address(required)
+
+7. photo(required)
+
+NOTE: Once student successfully created/ added, modal/popup will display with success message along with student details.
+
+View Students: It contains list of students and Edit and delete functionality for individual student. Also List should have filter functionality by first Name. 
+
+Student Notice: List of Student's Notice. Individual Notice details will be display once click on respective notice.
+
+Teacher/Staff Notice: List of Teacher/staff Notice. Individual Notice details will be display once click on respective notice.
+
+>teave Management: Student can apply Leave from here which contains Leave date and reason. Teacher can approve/reject leave submitted by teacher. Task Management: List of Student's common tasks for all students added by Teacher. Teachers can add task which is common for all students
+
+Logout: Also after clicking on Logout, modal/popup will display with logout successfully message and application will navigate to login screen.
