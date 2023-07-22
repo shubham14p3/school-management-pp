@@ -11,6 +11,7 @@ const AddStudentForm = ({ handleAddStudent }) => {
     photo: "",
     username: "",
     password: "",
+    role: "student"
   });
 
   const handleChange = (e) => {

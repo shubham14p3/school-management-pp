@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -24,7 +24,9 @@ import teachingStaffData from "./data/teachingStaff.json";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(""); // To store the user type after login
+  const [userType, setUserType] = useState(
+    localStorage.getItem("userType") || ""
+  ); // To store the user type after login, get from localStorage
   const [students, setStudents] = useState(studentsData);
   const [studentNotices, setStudentNotices] = useState(studentNoticesData);
   const [teacherNotices, setTeacherNotices] = useState(teacherNoticesData);
@@ -34,14 +36,24 @@ const App = () => {
   const admins = adminsData; // Get admins data from the imported file
   const teachingStaff = teachingStaffData; // Get teaching staff data from the imported file
 
+  useEffect(() => {
+    // When the component mounts, check if userType is present in localStorage and set it in state
+    const storedUserType = localStorage.getItem("userType");
+    if (storedUserType) {
+      setUserType(storedUserType);
+      setLoggedIn(true);
+    }
+  }, []);
+
   const handleLogin = (username, password) => {
     // Check if the user exists in the admins.json file
     const adminUser = admins.find(
       (user) => user.username === username && user.password === password
     );
     if (adminUser) {
-      setLoggedIn(true);
       setUserType(adminUser.role); // Set the user type after successful login
+      localStorage.setItem("userType", adminUser.role); // Store userType in localStorage
+      setLoggedIn(true);
       return;
     }
 
@@ -50,8 +62,9 @@ const App = () => {
       (user) => user.username === username && user.password === password
     );
     if (staffUser) {
-      setLoggedIn(true);
       setUserType(staffUser.role); // Set the user type after successful login
+      localStorage.setItem("userType", staffUser.role); // Store userType in localStorage
+      setLoggedIn(true);
       return;
     }
 
@@ -60,8 +73,9 @@ const App = () => {
       (user) => user.username === username && user.password === password
     );
     if (studentUser) {
-      setLoggedIn(true);
       setUserType(studentUser.role); // Set the user type after successful login
+      localStorage.setItem("userType", studentUser.role); // Store userType in localStorage
+      setLoggedIn(true);
       return;
     }
 
@@ -77,6 +91,7 @@ const App = () => {
     setModalTitle("Logout");
     setModalMessage("Logout successful.");
     setShowModal(true);
+    localStorage.removeItem("userType");
   };
 
   const handleAddStudent = (newStudent) => {
@@ -158,13 +173,7 @@ const App = () => {
         />
 
         {/* Route for adding a student */}
-        {/* <Route
-          path="/add-student"
-          element={
-            <AddStudentForm students={students} setStudents={setStudents} />
-          }
-          when={loggedIn && userType === "admin"}
-        /> */}
+    
         <Route
           path="/add-student"
           element={<AddStudentForm handleAddStudent={handleAddStudent} />}
@@ -173,14 +182,14 @@ const App = () => {
         {/* Route for viewing student notices */}
         <Route
           path="/student-notice"
-          element={<StudentNotice studentNotices={studentNotices} />}
+          element={<StudentNotice studentNotices={studentNotices} userType={userType}/>}
           when={loggedIn && userType === "student"}
         />
 
         {/* Route for viewing teacher notices */}
         <Route
           path="/teacher-notice"
-          element={<TeacherNotice teacherNotices={teacherNotices} />}
+          element={<TeacherNotice teacherNotices={teacherNotices} userType={userType} />}
           when={loggedIn && userType === "teachingStaff"}
         />
 
