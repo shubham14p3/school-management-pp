@@ -165,6 +165,7 @@ const App = () => {
               students={students}
               handleEditStudent={handleEditStudent}
               handleDeleteStudent={handleDeleteStudent}
+              userType={userType}
             />
           }
           when={loggedIn && userType === "admin"}
@@ -174,7 +175,7 @@ const App = () => {
 
         <Route
           path="/add-student"
-          element={<AddStudentForm handleAddStudent={handleAddStudent} />}
+          element={<AddStudentForm handleAddStudent={handleAddStudent} userType={userType}/>}
           when={loggedIn && userType === "admin"}
         />
         {/* Route for viewing student notices */}
@@ -204,14 +205,14 @@ const App = () => {
         {/* Route for leave management */}
         <Route
           path="/leave-management"
-          element={<LeaveManagement />}
+          element={<LeaveManagement userType={userType} />}
           when={loggedIn && userType === "teachingStaff"}
         />
 
         {/* Route for task management */}
         <Route
           path="/task-management"
-          element={<TaskManagement />}
+          element={<TaskManagement userType={userType}/>}
           when={loggedIn && userType === "teachingStaff"}
         />
 

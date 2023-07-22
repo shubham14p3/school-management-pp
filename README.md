@@ -98,6 +98,8 @@ Student Notice: List of Student's Notice. Individual Notice details will be disp
 
 Teacher/Staff Notice: List of Teacher/staff Notice. Individual Notice details will be display once click on respective notice.
 
->teave Management: Student can apply Leave from here which contains Leave date and reason. Teacher can approve/reject leave submitted by teacher. Task Management: List of Student's common tasks for all students added by Teacher. Teachers can add task which is common for all students
+leave Management: Student can apply Leave from here which contains Leave date and reason. Teacher can approve/reject leave submitted by teacher. 
+
+Task Management: List of Student's common tasks for all students added by Teacher. Teachers can add task which is common for all students
 
 Logout: Also after clicking on Logout, modal/popup will display with logout successfully message and application will navigate to login screen.

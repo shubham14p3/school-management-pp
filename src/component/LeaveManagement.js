@@ -1,23 +1,51 @@
-// LeaveManagement.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const LeaveManagement = ({ userType }) => {
-  const [leaveDate, setLeaveDate] = useState('');
-  const [leaveReason, setLeaveReason] = useState('');
+  const [leaveDate, setLeaveDate] = useState("");
+  const [leaveReason, setLeaveReason] = useState("");
+  const [leaveApplications, setLeaveApplications] = useState([]);
 
   const handleApplyLeave = (e) => {
     e.preventDefault();
-    // Handle leave application submission
-    // For student, submit leaveDate and leaveReason
-    // For teacher, handle approval/rejection of leave applications
-    console.log('Leave Date:', leaveDate);
-    console.log('Leave Reason:', leaveReason);
+    // Handle leave application submission for student
+    if (userType === "student") {
+      const newLeaveApplication = { leaveDate, leaveReason, status: "pending" };
+      setLeaveApplications([...leaveApplications, newLeaveApplication]);
+      setLeaveDate("");
+      setLeaveReason("");
+    }
   };
+
+  const handleApproveRejectLeave = (index, action) => {
+    // Handle leave approval/rejection for teacher
+    const updatedLeaveApplications = [...leaveApplications];
+    updatedLeaveApplications[index].status = action;
+    setLeaveApplications(updatedLeaveApplications);
+  };
+
+  // Sample leave applications for demonstration (for teacher view)
+  if (
+    userType === "teacher" ||
+    (userType === "admin" && leaveApplications.length === 0)
+  ) {
+    setLeaveApplications([
+      {
+        leaveDate: "2023-07-25",
+        leaveReason: "Personal reasons",
+        status: "pending",
+      },
+      {
+        leaveDate: "2023-07-28",
+        leaveReason: "Medical appointment",
+        status: "pending",
+      },
+    ]);
+  }
 
   return (
     <div>
       <h3>Leave Management</h3>
-      {userType === 'student' ? (
+      {userType === "student" ? (
         <form onSubmit={handleApplyLeave}>
           <div>
             <label htmlFor="leaveDate">Leave Date</label>
@@ -39,9 +67,46 @@ const LeaveManagement = ({ userType }) => {
           <button type="submit">Apply Leave</button>
         </form>
       ) : (
-        // Show leave applications and approve/reject options for teachers
+        // Show leave applications and approve/reject options for teacher
         <div>
-          {/* Implement the leave management view for teachers here */}
+          {leaveApplications.length === 0 ? (
+            <p>No leave applications to display.</p>
+          ) : (
+            <ul>
+              {leaveApplications.map((application, index) => (
+                <li key={index}>
+                  <div>
+                    <strong>Leave Date:</strong> {application.leaveDate}
+                  </div>
+                  <div>
+                    <strong>Leave Reason:</strong> {application.leaveReason}
+                  </div>
+                  <div>
+                    <strong>Status:</strong> {application.status}
+                  </div>
+                  {application.status === "pending" && (
+                    <div>
+                      <button
+                        onClick={() =>
+                          handleApproveRejectLeave(index, "approved")
+                        }
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleApproveRejectLeave(index, "rejected")
+                        }
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  )}
+                  <hr />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>
