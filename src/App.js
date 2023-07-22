@@ -95,12 +95,10 @@ const App = () => {
   };
 
   const handleAddStudent = (newStudent) => {
+    console.log(newStudent);
     // Assign a unique ID to the new student
     newStudent.id = Date.now();
     setStudents([...students, newStudent]); // Add the new student to the list
-    setModalTitle("Success");
-    setModalMessage("Student added successfully.");
-    setShowModal(true);
   };
   const handleEditStudent = (studentId, updatedData) => {
     setStudents((prevStudents) => {
@@ -173,7 +171,7 @@ const App = () => {
         />
 
         {/* Route for adding a student */}
-    
+
         <Route
           path="/add-student"
           element={<AddStudentForm handleAddStudent={handleAddStudent} />}
@@ -182,14 +180,24 @@ const App = () => {
         {/* Route for viewing student notices */}
         <Route
           path="/student-notice"
-          element={<StudentNotice studentNotices={studentNotices} userType={userType}/>}
+          element={
+            <StudentNotice
+              studentNotices={studentNotices}
+              userType={userType}
+            />
+          }
           when={loggedIn && userType === "student"}
         />
 
         {/* Route for viewing teacher notices */}
         <Route
           path="/teacher-notice"
-          element={<TeacherNotice teacherNotices={teacherNotices} userType={userType} />}
+          element={
+            <TeacherNotice
+              teacherNotices={teacherNotices}
+              userType={userType}
+            />
+          }
           when={loggedIn && userType === "teachingStaff"}
         />
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AddStudentModal from "./AddStudentModal";
 
 const AddStudentForm = ({ handleAddStudent }) => {
   const [formData, setFormData] = useState({
@@ -11,8 +12,9 @@ const AddStudentForm = ({ handleAddStudent }) => {
     photo: "",
     username: "",
     password: "",
-    role: "student"
+    role: "student",
   });
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -32,10 +34,18 @@ const AddStudentForm = ({ handleAddStudent }) => {
 
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Open the modal on form submission
+    setShowModal(true);
+  };
+
+  const handleConfirmSubmit = () => {
+    // Call the add student function to submit the data
     handleAddStudent(formData);
-    // Clear form fields after submission
+
+    // Clear form fields after successful submission
     setFormData({
       firstName: "",
       lastName: "",
@@ -46,7 +56,30 @@ const AddStudentForm = ({ handleAddStudent }) => {
       photo: "",
       username: "",
       password: "",
+      role: "student",
     });
+
+    // Close the modal after successful submission
+    setShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    // Reset the form data on modal close
+    setFormData({
+      firstName: "",
+      lastName: "",
+      birthdate: "",
+      standard: "",
+      division: "",
+      address: "",
+      photo: "",
+      username: "",
+      password: "",
+      role: "student",
+    });
+
+    // Close the modal
+    setShowModal(false);
   };
 
   // Validation functions
@@ -57,7 +90,7 @@ const AddStudentForm = ({ handleAddStudent }) => {
     <div>
       <h3>Add Student</h3>
       <form onSubmit={handleSubmit}>
-        <div>
+      <div>
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
@@ -164,6 +197,15 @@ const AddStudentForm = ({ handleAddStudent }) => {
         </div>
         <button type="submit">Submit</button>
       </form>
+
+
+      {/* Custom Modal */}
+      <AddStudentModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmSubmit}
+        modalData={formData} // Pass the form data to the modal for confirmation
+      />
     </div>
   );
 };
