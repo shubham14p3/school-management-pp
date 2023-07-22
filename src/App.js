@@ -79,25 +79,15 @@ const App = () => {
     setShowModal(true);
   };
 
-  const handleAddStudent = (formData) => {
-    const { username } = formData;
-
-    // Check if the username already exists in students, teacherStaff, or admins arrays
-    const allUsernames = [
-      ...students.map((student) => student.username),
-      ...teachingStaff.map((staff) => staff.username),
-      ...admins.map((admin) => admin.username),
-    ];
-
-    if (allUsernames.includes(username)) {
-      setModalTitle("Warning");
-      setModalMessage(
-        "Username already exists. Please choose a different one."
-      );
-      setShowModal(true);
-      return;
-    }
+  const handleAddStudent = (newStudent) => {
+    // Assign a unique ID to the new student
+    newStudent.id = Date.now();
+    setStudents([...students, newStudent]); // Add the new student to the list
+    setModalTitle("Success");
+    setModalMessage("Student added successfully.");
+    setShowModal(true);
   };
+
   return (
     <Router>
       <Routes>
@@ -157,18 +147,10 @@ const App = () => {
         /> */}
         <Route
           path="/add-student"
-          element={
-            <AddStudentForm
-              handleAddStudent={handleAddStudent}
-              existingUsernames={[
-                ...students.map((student) => student.username),
-                ...teachingStaff.map((staff) => staff.username),
-                ...admins.map((admin) => admin.username),
-              ]}
-            />
-          }
+          element={<AddStudentForm handleAddStudent={handleAddStudent} />}
           when={loggedIn && userType === "admin"}
         />
+        {/* Route for viewing student notices */}
         <Route
           path="/student-notice"
           element={<StudentNotice studentNotices={studentNotices} />}
