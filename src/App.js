@@ -16,6 +16,7 @@ import TeacherNotice from "./component/TeacherNotice";
 import LeaveManagement from "./component/LeaveManagement";
 import TaskManagement from "./component/TaskManagement";
 import LogoutModal from "./component/LogoutModal";
+import LogoutModalLogin from "./component/LogoutModalLogin";
 import studentsData from "./data/students.json";
 import studentNoticesData from "./data/studentNotices.json";
 import teacherNoticesData from "./data/teacherNotices.json";
@@ -31,6 +32,7 @@ const App = () => {
   const [studentNotices, setStudentNotices] = useState(studentNoticesData);
   const [teacherNotices, setTeacherNotices] = useState(teacherNoticesData);
   const [showModal, setShowModal] = useState(false);
+  const [showModalLogin, setShowModalLogin] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const admins = adminsData; // Get admins data from the imported file
@@ -82,7 +84,7 @@ const App = () => {
     // Handle invalid credentials
     setModalTitle("Warning");
     setModalMessage("Invalid credentials. Please try again.");
-    setShowModal(true);
+    setShowModalLogin(true);
   };
 
   const handleLogout = () => {
@@ -90,7 +92,7 @@ const App = () => {
     setUserType("");
     setModalTitle("Logout");
     setModalMessage("Logout successful.");
-    setShowModal(true);
+    setShowModalLogin(true);
     localStorage.removeItem("userType");
   };
 
@@ -223,6 +225,14 @@ const App = () => {
         <LogoutModal
           showModal={showModal}
           setShowModal={setShowModal}
+          title={modalTitle}
+          message={modalMessage}
+        />
+      )}
+      {showModalLogin && (
+        <LogoutModalLogin
+          showModal={showModalLogin}
+          setShowModal={setShowModalLogin}
           title={modalTitle}
           message={modalMessage}
         />
