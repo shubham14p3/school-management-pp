@@ -45,7 +45,7 @@ const App = () => {
       setUserType(storedUserType);
       setLoggedIn(true);
     }
-  }, []);
+  }, [studentNotices, teacherNotices, admins, students, teachingStaff]);
 
   const handleLogin = (username, password) => {
     // Check if the user exists in the admins.json file
@@ -97,10 +97,13 @@ const App = () => {
   };
 
   const handleAddStudent = (newStudent) => {
-    console.log(newStudent);
     // Assign a unique ID to the new student
     newStudent.id = Date.now();
     setStudents([...students, newStudent]); // Add the new student to the list
+  };
+
+  const handleAddNewNotice = (newStudentNotice) => {
+    setStudentNotices(newStudentNotice); // Add the new student to the list
   };
   const handleEditStudent = (studentId, updatedData) => {
     setStudents((prevStudents) => {
@@ -199,7 +202,7 @@ const App = () => {
             <StudentNotice
               studentNotices={studentNotices}
               userType={userType}
-              handleLogout={handleLogout}
+              handleAddNewNotice={handleAddNewNotice}
             />
           }
           when={loggedIn && userType === "student"}
