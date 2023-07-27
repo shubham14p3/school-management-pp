@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import './LoginForm.css'; // Import the custom CSS file
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import "./LoginForm.css"; // Import the custom CSS file
 
 const LoginForm = ({ handleLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ const LoginForm = ({ handleLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-
+        <br />
         <Button variant="primary" type="submit">
           Login
         </Button>
