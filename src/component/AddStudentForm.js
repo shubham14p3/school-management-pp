@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddStudentModal from "./AddStudentModal";
-
-const AddStudentForm = ({ handleAddStudent }) => {
+import Dashboard from "./Dashboard";
+import "./AddStudentForm.css";
+const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -63,7 +64,7 @@ const AddStudentForm = ({ handleAddStudent }) => {
 
     // Close the modal after successful submission
     setShowModal(false);
-    navigate("/view-students"); 
+    navigate("/view-students");
   };
 
   const handleCloseModal = () => {
@@ -90,126 +91,127 @@ const AddStudentForm = ({ handleAddStudent }) => {
   const isFutureDate = (date) => new Date(date) > new Date();
 
   return (
-    <div>
-      <h3>Add Student</h3>
-      <form onSubmit={handleSubmit}>
-      <div>
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-            minLength={3}
-            maxLength={10}
-            pattern="^[A-Za-z]+$"
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-            minLength={3}
-            maxLength={10}
-            pattern="^[A-Za-z]+$"
-          />
-        </div>
-        <div>
-          <label htmlFor="birthdate">Birthdate</label>
-          <input
-            type="date"
-            id="birthdate"
-            name="birthdate"
-            value={formData.birthdate}
-            onChange={handleChange}
-            required
-            max={new Date().toISOString().split("T")[0]} // Restricts future dates
-          />
-        </div>
-        <div>
-          <label htmlFor="standard">Standard</label>
-          <input
-            type="text"
-            id="standard"
-            name="standard"
-            value={formData.standard}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="division">Division</label>
-          <input
-            type="text"
-            id="division"
-            name="division"
-            value={formData.division}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="address">Address</label>
-          <textarea
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="photo">Photo</label>
-          <input
-            type="file"
-            id="photo"
-            name="photo"
-            accept="image/*"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <Dashboard userType="admin" handleLogout={handleLogout}>
+      <div className="add-student-form-container">
+        <h3>Add Student</h3>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+              minLength={3}
+              maxLength={10}
+              pattern="^[A-Za-z]+$"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+              minLength={3}
+              maxLength={10}
+              pattern="^[A-Za-z]+$"
+            />
+          </div>
+          <div>
+            <label htmlFor="birthdate">Birthdate</label>
+            <input
+              type="date"
+              id="birthdate"
+              name="birthdate"
+              value={formData.birthdate}
+              onChange={handleChange}
+              required
+              max={new Date().toISOString().split("T")[0]} // Restricts future dates
+            />
+          </div>
+          <div>
+            <label htmlFor="standard">Standard</label>
+            <input
+              type="text"
+              id="standard"
+              name="standard"
+              value={formData.standard}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="division">Division</label>
+            <input
+              type="text"
+              id="division"
+              name="division"
+              value={formData.division}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="address">Address</label>
+            <textarea
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="photo">Photo</label>
+            <input
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
 
-
-      {/* Custom Modal */}
-      <AddStudentModal
-        isOpen={showModal}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmSubmit}
-        modalData={formData} // Pass the form data to the modal for confirmation
-      />
-    </div>
+        {/* Custom Modal */}
+        <AddStudentModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          onConfirm={handleConfirmSubmit}
+          modalData={formData} // Pass the form data to the modal for confirmation
+        />
+      </div>
+    </Dashboard>
   );
 };
 

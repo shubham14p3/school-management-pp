@@ -1,0 +1,19 @@
+.view-students-container {
+    padding: 20px;
+  }
+  
+  .filter-input {
+    margin-bottom: 10px;
+  }
+  
+  .pagination {
+    margin-top: 10px;
+  }
+  
+  .edit-buttons button {
+    margin-right: 5px;
+  }
+  .no-records-found{
+    display: flex;
+    justify-content: center;
+  }

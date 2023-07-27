@@ -168,16 +168,25 @@ const App = () => {
               handleEditStudent={handleEditStudent}
               handleDeleteStudent={handleDeleteStudent}
               userType={userType}
+              handleLogout={handleLogout}
             />
           }
-          when={loggedIn && userType === "admin"}
+          when={
+            loggedIn && (userType === "admin" || userType === "teachingStaff")
+          }
         />
 
         {/* Route for adding a student */}
 
         <Route
           path="/add-student"
-          element={<AddStudentForm handleAddStudent={handleAddStudent} userType={userType}/>}
+          element={
+            <AddStudentForm
+              handleAddStudent={handleAddStudent}
+              userType={userType}
+              handleLogout={handleLogout}
+            />
+          }
           when={loggedIn && userType === "admin"}
         />
         {/* Route for viewing student notices */}
@@ -187,6 +196,7 @@ const App = () => {
             <StudentNotice
               studentNotices={studentNotices}
               userType={userType}
+              handleLogout={handleLogout}
             />
           }
           when={loggedIn && userType === "student"}
@@ -199,6 +209,7 @@ const App = () => {
             <TeacherNotice
               teacherNotices={teacherNotices}
               userType={userType}
+              handleLogout={handleLogout}
             />
           }
           when={loggedIn && userType === "teachingStaff"}
@@ -207,14 +218,18 @@ const App = () => {
         {/* Route for leave management */}
         <Route
           path="/leave-management"
-          element={<LeaveManagement userType={userType} />}
+          element={
+            <LeaveManagement userType={userType} handleLogout={handleLogout} />
+          }
           when={loggedIn && userType === "teachingStaff"}
         />
 
         {/* Route for task management */}
         <Route
           path="/task-management"
-          element={<TaskManagement userType={userType}/>}
+          element={
+            <TaskManagement userType={userType} handleLogout={handleLogout} />
+          }
           when={loggedIn && userType === "teachingStaff"}
         />
 

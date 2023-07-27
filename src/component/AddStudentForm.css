@@ -1,0 +1,51 @@
+.add-student-form-container {
+    padding: 20px;
+  }
+  
+  .add-student-form-container form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .add-student-form-container form div {
+    margin-bottom: 10px;
+  }
+  
+  .add-student-form-container form label {
+    font-weight: bold;
+  }
+  
+  /* Style the input fields as Bootstrap form controls */
+  .add-student-form-container form input,
+  .add-student-form-container form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style the Submit button as a Bootstrap primary button */
+  .add-student-form-container form button[type="submit"] {
+    padding: 8px 20px;
+  }
+  
+  /* Center the custom modal */
+  .add-student-form-container .modal-content {
+    text-align: center;
+  }
+  
+  /* Add some spacing to the custom modal buttons */
+  .add-student-form-container .modal-footer {
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Style the custom modal close button */
+  .add-student-form-container .modal-close {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+  }
+  
