@@ -29,14 +29,14 @@ const App = () => {
     localStorage.getItem("userType") || ""
   ); // To store the user type after login, get from localStorage
   const [students, setStudents] = useState(studentsData);
+  const [admins, setadmins] = useState(adminsData);
+  const [teachingStaff, setTeachingStaff] = useState(teachingStaffData);
   const [studentNotices, setStudentNotices] = useState(studentNoticesData);
   const [teacherNotices, setTeacherNotices] = useState(teacherNoticesData);
   const [showModal, setShowModal] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
-  const admins = adminsData; // Get admins data from the imported file
-  const teachingStaff = teachingStaffData; // Get teaching staff data from the imported file
 
   useEffect(() => {
     // When the component mounts, check if userType is present in localStorage and set it in state
@@ -182,6 +182,9 @@ const App = () => {
           path="/add-student"
           element={
             <AddStudentForm
+              students={students}
+              teachingStaff={teachingStaff}
+              admin={admins}
               handleAddStudent={handleAddStudent}
               userType={userType}
               handleLogout={handleLogout}

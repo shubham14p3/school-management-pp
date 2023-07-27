@@ -4,7 +4,13 @@ import AddStudentModal from "./AddStudentModal";
 import Dashboard from "./Dashboard";
 import "./AddStudentForm.css";
 
-const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
+const AddStudentForm = ({
+  handleAddStudent,
+  handleLogout,
+  students,
+  teachingStaff,
+  admin,
+}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -114,25 +120,40 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
 
   const handleConfirmSubmit = () => {
     // Call the add student function to submit the data
-    handleAddStudent(formData);
+    const usernameExists = students.some(
+      (student) => student.username === formData.username
+    );
+    const teacherUsernameExists = teachingStaff.some(
+      (teacher) => teacher.username === formData.username
+    );
+    const adminUsernameExists = admin.some(
+      (adminUser) => adminUser.username === formData.username
+    );
 
-    // Clear form fields after successful submission
-    setFormData({
-      firstName: "",
-      lastName: "",
-      birthdate: "",
-      standard: "",
-      division: "",
-      address: "",
-      photo: "",
-      username: "",
-      password: "",
-      role: "student",
-    });
+    if (usernameExists || teacherUsernameExists || adminUsernameExists) {
+      alert("Username already exists. Please choose a different username.");
+      return;
+    } else {
+      handleAddStudent(formData);
 
-    // Close the modal after successful submission
-    setShowModal(false);
-    navigate("/view-students");
+      // Clear form fields after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        birthdate: "",
+        standard: "",
+        division: "",
+        address: "",
+        photo: "",
+        username: "",
+        password: "",
+        role: "student",
+      });
+
+      // Close the modal after successful submission
+      setShowModal(false);
+      navigate("/view-students");
+    }
   };
 
   const handleCloseModal = () => {
