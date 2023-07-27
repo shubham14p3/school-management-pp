@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AddStudentModal from "./AddStudentModal";
 import Dashboard from "./Dashboard";
 import "./AddStudentForm.css";
+
 const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -17,7 +18,10 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
     password: "",
     role: "student",
   });
+
+  // State to store validation errors for each field
   const [showModal, setShowModal] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -25,14 +29,78 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
     // Handle file validation for photo field
     if (type === "file" && name === "photo") {
       const file = e.target.files[0];
-      const validTypes = ["image/jpeg", "image/png"];
+      const validTypes = ["image/jpeg", "image/jpg"];
       if (file && !validTypes.includes(file.type)) {
         // Invalid file type, reset the input value
         e.target.value = "";
         setFormData({ ...formData, [name]: "" });
-        alert("Please select a valid image file (jpg, jpeg, or png).");
+        setValidationErrors({
+          ...validationErrors,
+          [name]: "Please select a valid image file (jpg or jpeg).",
+        });
         return;
       }
+    }
+
+    // Reset validation error for the current field
+    setValidationErrors({ ...validationErrors, [name]: "" });
+
+    // Perform custom validations for each field
+    switch (name) {
+      case "firstName":
+        if (!/^[A-Za-z]{3,}$/.test(value.trim())) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]:
+              "First name should have at least 3 letters and only contain text.",
+          });
+        }
+        break;
+      case "lastName":
+        if (!/^[A-Za-z]{3,}$/.test(value.trim())) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]:
+              "Last name should have at least 3 letters and only contain text.",
+          });
+        }
+        break;
+      case "birthdate":
+        const currentDate = new Date();
+        const selectedDate = new Date(value);
+        if (selectedDate > currentDate) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]: "Birthdate cannot be in the future.",
+          });
+        }
+        break;
+      case "standard":
+        if (!/^[1-9]|1[0-2]$/.test(value)) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]: "Standard should be a number between 1 and 12.",
+          });
+        }
+        break;
+      case "division":
+        if (!/^[A-Za-z]$/.test(value)) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]: "Division should be a single letter (A-Z).",
+          });
+        }
+        break;
+      case "address":
+        if (value.length > 100) {
+          setValidationErrors({
+            ...validationErrors,
+            [name]: "Address should not exceed 100 characters.",
+          });
+        }
+        break;
+      default:
+        break;
     }
 
     setFormData({ ...formData, [name]: value });
@@ -93,7 +161,7 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
   return (
     <Dashboard userType="admin" handleLogout={handleLogout}>
       <div className="add-student-form-container">
-        <h3>Add Student</h3>
+        <h3 className="add-student-header">Add Student</h3>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="firstName">First Name</label>
@@ -104,11 +172,14 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               value={formData.firstName}
               onChange={handleChange}
               required
-              minLength={3}
-              maxLength={10}
-              pattern="^[A-Za-z]+$"
             />
+            {validationErrors.firstName && (
+              <span className="validation-error">
+                {validationErrors.firstName}
+              </span>
+            )}
           </div>
+
           <div>
             <label htmlFor="lastName">Last Name</label>
             <input
@@ -122,7 +193,13 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               maxLength={10}
               pattern="^[A-Za-z]+$"
             />
+            {validationErrors.lastName && (
+              <span className="validation-error">
+                {validationErrors.lastName}
+              </span>
+            )}
           </div>
+
           <div>
             <label htmlFor="birthdate">Birthdate</label>
             <input
@@ -134,28 +211,59 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               required
               max={new Date().toISOString().split("T")[0]} // Restricts future dates
             />
+            {validationErrors.birthdate && (
+              <span className="validation-error">
+                {validationErrors.birthdate}
+              </span>
+            )}
           </div>
-          <div>
+
+          <div className="form-group">
             <label htmlFor="standard">Standard</label>
-            <input
-              type="text"
+            <select
               id="standard"
               name="standard"
               value={formData.standard}
               onChange={handleChange}
               required
-            />
+              className="form-control"
+            >
+              <option value="">Select Standard</option>
+              {Array.from({ length: 12 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
+            {validationErrors.standard && (
+              <span className="validation-error">
+                {validationErrors.standard}
+              </span>
+            )}
           </div>
-          <div>
+
+          <div className="form-group">
             <label htmlFor="division">Division</label>
-            <input
-              type="text"
+            <select
               id="division"
               name="division"
               value={formData.division}
               onChange={handleChange}
               required
-            />
+              className="form-control"
+            >
+              <option value="">Select Division</option>
+              {Array.from({ length: 26 }, (_, index) => (
+                <option key={index} value={String.fromCharCode(65 + index)}>
+                  {String.fromCharCode(65 + index)}
+                </option>
+              ))}
+            </select>
+            {validationErrors.division && (
+              <span className="validation-error">
+                {validationErrors.division}
+              </span>
+            )}
           </div>
           <div>
             <label htmlFor="address">Address</label>
@@ -165,19 +273,30 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               value={formData.address}
               onChange={handleChange}
               required
+              maxLength={100}
             />
+            {validationErrors.address && (
+              <span className="validation-error">
+                {validationErrors.address}
+              </span>
+            )}
           </div>
+
           <div>
             <label htmlFor="photo">Photo</label>
             <input
               type="file"
               id="photo"
               name="photo"
-              accept="image/*"
+              accept="image/jpeg, image/jpg"
               onChange={handleChange}
               required
             />
+            {validationErrors.photo && (
+              <span className="validation-error">{validationErrors.photo}</span>
+            )}
           </div>
+
           <div>
             <label htmlFor="username">Username</label>
             <input
@@ -188,7 +307,13 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               onChange={handleChange}
               required
             />
+            {validationErrors.username && (
+              <span className="validation-error">
+                {validationErrors.username}
+              </span>
+            )}
           </div>
+
           <div>
             <label htmlFor="password">Password</label>
             <input
@@ -199,6 +324,11 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
               onChange={handleChange}
               required
             />
+            {validationErrors.password && (
+              <span className="validation-error">
+                {validationErrors.password}
+              </span>
+            )}
           </div>
           <button type="submit">Submit</button>
         </form>
@@ -208,7 +338,7 @@ const AddStudentForm = ({ handleAddStudent, handleLogout }) => {
           isOpen={showModal}
           onClose={handleCloseModal}
           onConfirm={handleConfirmSubmit}
-          modalData={formData} // Pass the form data to the modal for confirmation
+          modalData={formData}
         />
       </div>
     </Dashboard>
