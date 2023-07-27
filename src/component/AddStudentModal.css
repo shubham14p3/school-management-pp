@@ -1,4 +1,4 @@
-.custom-modal {
+.add-student-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -8,13 +8,13 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
   
-  .custom-modal.open {
+  .add-student-modal.open {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .modal-content {
+  .add-student-modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 5px;

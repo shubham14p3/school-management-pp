@@ -66,14 +66,15 @@ const ViewStudents = ({ students, handleEditStudent, handleDeleteStudent }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Username</th>
-            <th>Password</th>
+
             <th>First Name</th>
             <th>Last Name</th>
             <th>Birthdate</th>
             <th>Standard</th>
             <th>Division</th>
             <th>Address</th>
+            <th>Username</th>
+            <th>Password</th>
             <th>Photo</th>
             <th>Edit/Delete</th>
           </tr>
@@ -82,11 +83,6 @@ const ViewStudents = ({ students, handleEditStudent, handleDeleteStudent }) => {
           {currentStudents.map((student) => (
             <tr key={student.id}>
               <td>{student.id}</td>
-              <td>{student.username}</td>
-              <td>
-                {/* Show password in password format */}
-                <input type="password" value={student.password} disabled />
-              </td>
               <td>
                 {editingStudent && editingStudent.id === student.id ? (
                   <input
@@ -151,6 +147,11 @@ const ViewStudents = ({ students, handleEditStudent, handleDeleteStudent }) => {
                 ) : (
                   student.address
                 )}
+              </td>
+              <td>{student.username}</td>
+              <td>
+                {/* Show password in password format */}
+                <input type="password" value={student.password} disabled />
               </td>
               <td>
                 {/* Display student photo */}

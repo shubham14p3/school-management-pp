@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddStudentModal from "./AddStudentModal";
 
 const AddStudentForm = ({ handleAddStudent }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -61,6 +63,7 @@ const AddStudentForm = ({ handleAddStudent }) => {
 
     // Close the modal after successful submission
     setShowModal(false);
+    navigate("/view-students"); 
   };
 
   const handleCloseModal = () => {
