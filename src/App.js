@@ -171,7 +171,6 @@ const App = () => {
               handleEditStudent={handleEditStudent}
               handleDeleteStudent={handleDeleteStudent}
               userType={userType}
-              handleLogout={handleLogout}
             />
           }
           when={
@@ -190,7 +189,6 @@ const App = () => {
               admin={admins}
               handleAddStudent={handleAddStudent}
               userType={userType}
-              handleLogout={handleLogout}
             />
           }
           when={loggedIn && userType === "admin"}

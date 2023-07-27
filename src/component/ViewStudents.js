@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import "./ViewStudents.css"; // Import custom CSS file for styling
-
+import { useNavigate } from "react-router-dom";
 const ViewStudents = ({
   students,
   handleEditStudent,
-  handleDeleteStudent,
-  handleLogout,
+  handleDeleteStudent
 }) => {
+  const navigate = useNavigate();
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [editingStudent, setEditingStudent] = useState(null);
@@ -51,6 +51,10 @@ const ViewStudents = ({
     }));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userType");
+    navigate("/");
+  };
   return (
     <Dashboard userType="admin" handleLogout={handleLogout}>
       <div className="view-students-container">

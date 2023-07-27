@@ -6,7 +6,6 @@ import "./AddStudentForm.css";
 
 const AddStudentForm = ({
   handleAddStudent,
-  handleLogout,
   students,
   teachingStaff,
   admin,
@@ -29,6 +28,10 @@ const AddStudentForm = ({
   const [showModal, setShowModal] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
+  const handleLogout = () => {
+    localStorage.removeItem("userType");
+    navigate("/");
+  };
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
