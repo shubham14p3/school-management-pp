@@ -28,6 +28,7 @@ const App = () => {
   const [userType, setUserType] = useState(
     localStorage.getItem("userType") || ""
   ); // To store the user type after login, get from localStorage
+
   const [students, setStudents] = useState(studentsData);
   const [admins, setadmins] = useState(adminsData);
   const [teachingStaff, setTeachingStaff] = useState(teachingStaffData);
@@ -103,7 +104,10 @@ const App = () => {
   };
 
   const handleAddNewNotice = (newStudentNotice) => {
-    setStudentNotices(newStudentNotice); // Add the new student to the list
+    setStudentNotices(newStudentNotice); // Add the new student notice to the list
+  };
+  const handleAddNewNoticeTeacher = (newStudentNotice) => {
+    setTeacherNotices(newStudentNotice); // Add the new teacher notice to the list
   };
   const handleEditStudent = (studentId, updatedData) => {
     setStudents((prevStudents) => {
@@ -213,7 +217,7 @@ const App = () => {
             <TeacherNotice
               teacherNotices={teacherNotices}
               userType={userType}
-              handleLogout={handleLogout}
+              handleAddNewNotice={handleAddNewNoticeTeacher}
             />
           }
           when={loggedIn && userType === "teachingStaff"}
