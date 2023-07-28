@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Dashboard.css"; // Import the custom CSS file
 
@@ -14,14 +14,6 @@ const Dashboard = ({ userType, handleLogout, children }) => {
         </Link>
         <nav>
           <ul>
-            {/* Common tabs for all users */}
-            <li>
-              <Link to="/student-notice">Student Notice</Link>
-            </li>
-            <li>
-              <Link to="/leave-management">Leave Management</Link>
-            </li>
-
             {/* Tabs for admin */}
             {userType === "admin" && (
               <>
@@ -54,6 +46,13 @@ const Dashboard = ({ userType, handleLogout, children }) => {
                 </li>
               </>
             )}
+            {/* Common tabs for all users */}
+            <li>
+              <Link to="/student-notice">Student Notice</Link>
+            </li>
+            <li>
+              <Link to="/leave-management">Leave Management</Link>
+            </li>
           </ul>
         </nav>
         {/* Show the "Logout" button only on the "/dashboard" page */}
@@ -62,7 +61,7 @@ const Dashboard = ({ userType, handleLogout, children }) => {
       <main>
         {/* Display the content of the selected tab */}
         {isDashboardPage ? (
-          <div className="dashboard-children">Welcome to Dashboard</div>
+          <div id="dashboard-children">Welcome to Dashboard</div>
         ) : (
           children
         )}

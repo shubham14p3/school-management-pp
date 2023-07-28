@@ -177,11 +177,6 @@ const AddStudentForm = ({
     // Close the modal
     setShowModal(false);
   };
-
-  // Validation functions
-  const isAlphaOnly = (input) => /^[A-Za-z]+$/.test(input);
-  const isFutureDate = (date) => new Date(date) > new Date();
-
   return (
     <Dashboard userType="admin" handleLogout={handleLogout}>
       <div className="add-student-form-container">

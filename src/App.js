@@ -29,11 +29,21 @@ const App = () => {
     localStorage.getItem("userType") || ""
   ); // To store the user type after login, get from localStorage
 
-  const [students, setStudents] = useState(studentsData);
-  const [admins, setadmins] = useState(adminsData);
-  const [teachingStaff, setTeachingStaff] = useState(teachingStaffData);
-  const [studentNotices, setStudentNotices] = useState(studentNoticesData);
-  const [teacherNotices, setTeacherNotices] = useState(teacherNoticesData);
+  const [students, setStudents] = useState(
+    JSON.parse(localStorage.getItem("students")) || studentsData
+  );
+  const [admins, setadmins] = useState(
+    JSON.parse(localStorage.getItem("admins")) || adminsData
+  );
+  const [teachingStaff, setTeachingStaff] = useState(
+    JSON.parse(localStorage.getItem("teachingStaff")) || teachingStaffData
+  );
+  const [studentNotices, setStudentNotices] = useState(
+    JSON.parse(localStorage.getItem("studentNotices")) || studentNoticesData
+  );
+  const [teacherNotices, setTeacherNotices] = useState(
+    JSON.parse(localStorage.getItem("teacherNotices")) || teacherNoticesData
+  );
   const [showModal, setShowModal] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -46,7 +56,28 @@ const App = () => {
       setUserType(storedUserType);
       setLoggedIn(true);
     }
-  }, [studentNotices, teacherNotices, admins, students, teachingStaff]);
+  }, []);
+
+  // Update localStorage when data changes
+  useEffect(() => {
+    localStorage.setItem("students", JSON.stringify(students));
+  }, [students]);
+
+  useEffect(() => {
+    localStorage.setItem("admins", JSON.stringify(admins));
+  }, [admins]);
+
+  useEffect(() => {
+    localStorage.setItem("teachingStaff", JSON.stringify(teachingStaff));
+  }, [teachingStaff]);
+
+  useEffect(() => {
+    localStorage.setItem("studentNotices", JSON.stringify(studentNotices));
+  }, [studentNotices]);
+
+  useEffect(() => {
+    localStorage.setItem("teacherNotices", JSON.stringify(teacherNotices));
+  }, [teacherNotices]);
 
   const handleLogin = (username, password) => {
     // Check if the user exists in the admins.json file
@@ -94,7 +125,7 @@ const App = () => {
     setModalTitle("Logout");
     setModalMessage("Logout successful.");
     setShowModalLogin(true);
-    localStorage.removeItem("userType");
+    localStorage.clear(); // Clear all localStorage data
   };
 
   const handleAddStudent = (newStudent) => {
@@ -106,9 +137,11 @@ const App = () => {
   const handleAddNewNotice = (newStudentNotice) => {
     setStudentNotices(newStudentNotice); // Add the new student notice to the list
   };
+
   const handleAddNewNoticeTeacher = (newStudentNotice) => {
     setTeacherNotices(newStudentNotice); // Add the new teacher notice to the list
   };
+
   const handleEditStudent = (studentId, updatedData) => {
     setStudents((prevStudents) => {
       return prevStudents.map((student) =>

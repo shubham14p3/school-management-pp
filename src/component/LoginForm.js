@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./LoginForm.css"; // Import the custom CSS file
@@ -11,6 +11,9 @@ const LoginForm = ({ handleLogin }) => {
     e.preventDefault();
     handleLogin(username, password);
   };
+  useEffect(() => {
+    localStorage.clear(); // Clear all localStorage data
+  }, []);
 
   return (
     <div className="container">
