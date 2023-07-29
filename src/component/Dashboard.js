@@ -61,7 +61,7 @@ const Dashboard = ({ userType, handleLogout, children }) => {
       <main>
         {/* Display the content of the selected tab */}
         {isDashboardPage ? (
-          <div id="dashboard-children">Welcome to Dashboard</div>
+          <div className="dashboard-children">Welcome to Dashboard</div>
         ) : (
           children
         )}

@@ -2,6 +2,9 @@
     {
       "username": "tea",
       "password": "tea",
+      "firstName": "Teacher",
+      "lastName": "SmiTeacher",
+      "birthdate": "1998-03-25",
       "role": "teachingStaff"
     }
   ]
