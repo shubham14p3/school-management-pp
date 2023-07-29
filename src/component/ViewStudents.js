@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import "./ViewStudents.css"; // Import custom CSS file for styling
 import { useNavigate } from "react-router-dom";
+
 const ViewStudents = ({
   students,
   handleEditStudent,
   handleDeleteStudent,
-  userType
+  userType,
 }) => {
   const navigate = useNavigate();
   const [filterText, setFilterText] = useState("");
@@ -26,7 +27,9 @@ const ViewStudents = ({
     indexOfLastStudent
   );
 
-  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const startEditing = (studentId) => {
     const studentToEdit = students.find((student) => student.id === studentId);
@@ -53,9 +56,9 @@ const ViewStudents = ({
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userType");
     navigate("/");
   };
+
   return (
     <Dashboard userType={userType} handleLogout={handleLogout}>
       <div className="view-students-container">

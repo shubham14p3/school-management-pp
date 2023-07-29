@@ -7,9 +7,6 @@ const TaskManagement = ({ userType,handleLogout }) => {
 
   const handleAddTask = (e) => {
     e.preventDefault();
-    // Handle adding tasks to students
-    console.log("Task Title:", taskTitle);
-    console.log("Task Description:", taskDescription);
   };
 
   return (

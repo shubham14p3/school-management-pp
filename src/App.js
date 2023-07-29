@@ -22,9 +22,12 @@ import studentNoticesData from "./data/studentNotices.json";
 import teacherNoticesData from "./data/teacherNotices.json";
 import adminsData from "./data/admins.json";
 import teachingStaffData from "./data/teachingStaff.json";
-
+import leaveApplicationsData from "./data/leaveApplicationsData.json"; // Import the new JSON file
+import StudentLeaveApplication from "./component/StudentLeaveApplication"; // Import the student leave application component
+import TeacherLeaveApprovalList from "./component/TeacherLeaveApprovalList";
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [userType, setUserType] = useState(
     localStorage.getItem("userType") || ""
   ); // To store the user type after login, get from localStorage
@@ -86,6 +89,7 @@ const App = () => {
     );
     if (adminUser) {
       setUserType(adminUser.role); // Set the user type after successful login
+      setLoggedInUser(adminUser); // Save the entire user object in state
       localStorage.setItem("userType", adminUser.role); // Store userType in localStorage
       setLoggedIn(true);
       return;
@@ -96,6 +100,7 @@ const App = () => {
       (user) => user.username === username && user.password === password
     );
     if (staffUser) {
+      setLoggedInUser(staffUser); // Save the entire user object in state
       setUserType(staffUser.role); // Set the user type after successful login
       localStorage.setItem("userType", staffUser.role); // Store userType in localStorage
       setLoggedIn(true);
@@ -107,6 +112,7 @@ const App = () => {
       (user) => user.username === username && user.password === password
     );
     if (studentUser) {
+      setLoggedInUser(studentUser); // Save the entire user object in state
       setUserType(studentUser.role); // Set the user type after successful login
       localStorage.setItem("userType", studentUser.role); // Store userType in localStorage
       setLoggedIn(true);
@@ -157,6 +163,62 @@ const App = () => {
     });
   };
 
+  const [leaveApplications, setLeaveApplications] = useState(
+    JSON.parse(localStorage.getItem("leaveApplications")) ||
+      leaveApplicationsData
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      "leaveApplications",
+      JSON.stringify(leaveApplications)
+    );
+  }, [leaveApplications]);
+
+  const [submittedLeaveApplications, setSubmittedLeaveApplications] = useState(
+    JSON.parse(localStorage.getItem("submittedLeaveApplications")) || []
+  );
+
+  const handleApplyLeave = (newLeaveApplication) => {
+    setSubmittedLeaveApplications([
+      ...submittedLeaveApplications,
+      newLeaveApplication,
+    ]);
+    setLeaveApplications([...leaveApplications, newLeaveApplication]); // Add the new leave application to the list
+    saveLeaveApplicationsToJSON([...leaveApplications, newLeaveApplication]); // Save the updated leave applications to the JSON file
+  };
+
+  const handleApproveRejectLeave = (leaveApplicationId, action) => {
+    // Find the leave application in leaveApplications state and update its status
+    const updatedLeaveApplications = leaveApplications.map((application) =>
+      application.id === leaveApplicationId
+        ? { ...application, status: action }
+        : application
+    );
+    setLeaveApplications(updatedLeaveApplications);
+
+    // Update the submittedLeaveApplications state with the updated status
+    const updatedSubmittedLeaveApplications = submittedLeaveApplications.map(
+      (application) =>
+        application.id === leaveApplicationId
+          ? { ...application, status: action }
+          : application
+    );
+    setSubmittedLeaveApplications(updatedSubmittedLeaveApplications);
+
+    // Save the updated leave applications to the JSON file
+    saveLeaveApplicationsToJSON(updatedLeaveApplications);
+  };
+
+  const saveLeaveApplicationsToJSON = (leaveApps) => {
+    try {
+      const jsonString = JSON.stringify(leaveApps);
+      localStorage.setItem("leaveApplications", jsonString);
+    } catch (error) {
+      console.error("Error saving leave applications:", error);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -179,16 +241,19 @@ const App = () => {
                 <AdminDashboard
                   handleLogout={handleLogout}
                   userType={userType}
+                  loggedInUser={loggedInUser}
                 />
               ) : userType === "teachingStaff" ? (
                 <TeachingStaffDashboard
                   handleLogout={handleLogout}
                   userType={userType}
+                  loggedInUser={loggedInUser}
                 />
               ) : userType === "student" ? (
                 <StudentDashboard
                   handleLogout={handleLogout}
                   userType={userType}
+                  loggedInUser={loggedInUser}
                 />
               ) : (
                 <Navigate to="/" />
@@ -260,18 +325,37 @@ const App = () => {
         <Route
           path="/leave-management"
           element={
-            <LeaveManagement userType={userType} handleLogout={handleLogout} />
+            userType === "student" ? (
+              <StudentLeaveApplication
+                leaveApplications={submittedLeaveApplications} // Pass submittedLeaveApplications instead of leaveApplications
+                handleApplyLeave={handleApplyLeave}
+                loggedInUser={loggedInUser}
+                userType={userType}
+              />
+            ) : userType === "teachingStaff" ? (
+              <TeacherLeaveApprovalList
+                userType={userType}
+                leaveApplications={leaveApplications}
+                handleApproveRejectLeave={handleApproveRejectLeave}
+                loggedInUser={loggedInUser}
+              />
+            ) : (
+              <Navigate to="/" />
+            )
           }
-          when={(loggedIn && userType === "teachingStaff") || "student"}
+          when={
+            (loggedIn && userType === "teachingStaff") || userType === "student"
+          }
         />
-
         {/* Route for task management */}
         <Route
           path="/task-management"
           element={
             <TaskManagement userType={userType} handleLogout={handleLogout} />
           }
-          when={(loggedIn && userType === "teachingStaff") || "student"}
+          when={
+            (loggedIn && userType === "teachingStaff") || userType === "student"
+          }
         />
 
         <Route path="*" element={<Navigate to="/" />} />

@@ -1,74 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
-const LeaveManagement = ({ userType }) => {
-  console.log(userType)
+
+const LeaveManagement = ({
+  userType,
+  leaveApplications,
+  setLeaveApplications,
+  submittedLeaveApplications,
+  handleApplyLeave,
+  loggedInUser
+}) => {
   const navigate = useNavigate();
   const [leaveDate, setLeaveDate] = useState("");
   const [leaveReason, setLeaveReason] = useState("");
-  const [leaveApplications, setLeaveApplications] = useState([]);
-  const handleLogout = () => {
-  };
-  const handleApplyLeave = (e) => {
+
+  useEffect(() => {
+    // Load leave applications from the new JSON file
+    setLeaveApplications(leaveApplications);
+  }, []);
+
+  // Other parts of the component (handleLogout, handleApplyLeave, handleApproveRejectLeave) remain the same.
+
+  const applyLeave = (e) => {
     e.preventDefault();
+
     // Handle leave application submission for student
     if (userType === "student") {
-      const newLeaveApplication = { leaveDate, leaveReason, status: "pending" };
-      setLeaveApplications([...leaveApplications, newLeaveApplication]);
+      const newLeaveApplication = {
+        id: Date.now(),
+        studentFirstName: "John", // Replace with the student's first name
+        studentLastName: "Doe", // Replace with the student's last name
+        leaveDate,
+        leaveReason,
+        status: "pending",
+      };
+      handleApplyLeave(newLeaveApplication); // Call the function to handle leave application submission in App.js
       setLeaveDate("");
       setLeaveReason("");
     }
   };
-
   const handleApproveRejectLeave = (index, action) => {
     // Handle leave approval/rejection for teacher
     const updatedLeaveApplications = [...leaveApplications];
     updatedLeaveApplications[index].status = action;
     setLeaveApplications(updatedLeaveApplications);
+
+    // Save the updated leave applications to the JSON file
+    saveLeaveApplicationsToJSON(updatedLeaveApplications);
   };
 
-  // Sample leave applications for demonstration (for teacher view)
-  if (
-    userType === "teacher" ||
-    (userType === "admin" && leaveApplications.length === 0)
-  ) {
-    setLeaveApplications([
-      {
-        leaveDate: "2023-07-25",
-        leaveReason: "Personal reasons",
-        status: "pending",
-      },
-      {
-        leaveDate: "2023-07-28",
-        leaveReason: "Medical appointment",
-        status: "pending",
-      },
-    ]);
-  }
-
+  // Function to save leave applications to the JSON file
+  const saveLeaveApplicationsToJSON = (leaveApps) => {
+    // You can use a server API or a backend service to save the data to the server.
+    // For this example, we'll simulate saving by updating the local JSON file.
+    try {
+      const jsonString = JSON.stringify(leaveApps);
+      localStorage.setItem("leaveApplications", jsonString);
+    } catch (error) {
+      console.error("Error saving leave applications:", error);
+    }
+  };
+  const handleLogout = () => {
+    navigate("/");
+  };
   return (
     <Dashboard userType={userType} handleLogout={handleLogout}>
       <div>
         <h3>Leave Management</h3>
         {userType === "student" ? (
-          <form onSubmit={handleApplyLeave}>
-            <div>
-              <label htmlFor="leaveDate">Leave Date</label>
-              <input
-                type="date"
-                id="leaveDate"
-                value={leaveDate}
-                onChange={(e) => setLeaveDate(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="leaveReason">Leave Reason</label>
-              <textarea
-                id="leaveReason"
-                value={leaveReason}
-                onChange={(e) => setLeaveReason(e.target.value)}
-              />
-            </div>
+          <form onSubmit={applyLeave}>
+            {/* ... (existing form fields) */}
             <button type="submit">Apply Leave</button>
           </form>
         ) : (
@@ -78,10 +79,14 @@ const LeaveManagement = ({ userType }) => {
               <p>No leave applications to display.</p>
             ) : (
               <ul>
-                {leaveApplications.map((application, index) => (
-                  <li key={index}>
+                {leaveApplications.map((application) => (
+                  <li key={application.id}>
                     <div>
                       <strong>Leave Date:</strong> {application.leaveDate}
+                    </div>
+                    <div>
+                      <strong>Student Name:</strong>{" "}
+                      {`${application.firstName} ${application.lastName}`}
                     </div>
                     <div>
                       <strong>Leave Reason:</strong> {application.leaveReason}
@@ -93,14 +98,14 @@ const LeaveManagement = ({ userType }) => {
                       <div>
                         <button
                           onClick={() =>
-                            handleApproveRejectLeave(index, "approved")
+                            handleApproveRejectLeave(application.id, "approved")
                           }
                         >
                           Approve
                         </button>
                         <button
                           onClick={() =>
-                            handleApproveRejectLeave(index, "rejected")
+                            handleApproveRejectLeave(application.id, "rejected")
                           }
                         >
                           Reject

@@ -46,7 +46,6 @@ const TeacherNotice = ({ teacherNotices, userType, handleAddNewNotice }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userType");
     navigate("/");
   };
   return (
