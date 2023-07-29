@@ -13,7 +13,7 @@ const TaskManagement = ({ userType,handleLogout }) => {
   };
 
   return (
-    <Dashboard userType="admin" handleLogout={handleLogout}>
+    <Dashboard userType={userType} handleLogout={handleLogout}>
       <div>
         <h3>Task Management</h3>
         {userType === "teacher" ? (

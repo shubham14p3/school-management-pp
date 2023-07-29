@@ -50,7 +50,7 @@ const TeacherNotice = ({ teacherNotices, userType, handleAddNewNotice }) => {
     navigate("/");
   };
   return (
-    <Dashboard userType="admin" handleLogout={handleLogout}>
+    <Dashboard userType={userType} handleLogout={handleLogout}>
       <div>
         <h3>Teacher / Staff Notices</h3>
         {/* Form to add a new student notice */}

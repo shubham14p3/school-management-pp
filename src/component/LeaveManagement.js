@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
-const LeaveManagement = ({ userType,handleLogout }) => {
+import { useNavigate } from "react-router-dom";
+const LeaveManagement = ({ userType }) => {
+  console.log(userType)
+  const navigate = useNavigate();
   const [leaveDate, setLeaveDate] = useState("");
   const [leaveReason, setLeaveReason] = useState("");
   const [leaveApplications, setLeaveApplications] = useState([]);
-
+  const handleLogout = () => {
+  };
   const handleApplyLeave = (e) => {
     e.preventDefault();
     // Handle leave application submission for student
@@ -43,7 +47,7 @@ const LeaveManagement = ({ userType,handleLogout }) => {
   }
 
   return (
-    <Dashboard userType="admin" handleLogout={handleLogout}>
+    <Dashboard userType={userType} handleLogout={handleLogout}>
       <div>
         <h3>Leave Management</h3>
         {userType === "student" ? (

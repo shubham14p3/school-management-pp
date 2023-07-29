@@ -125,7 +125,7 @@ const App = () => {
     setModalTitle("Logout");
     setModalMessage("Logout successful.");
     setShowModalLogin(true);
-    localStorage.clear(); // Clear all localStorage data
+    localStorage.removeItem("userType"); // Clear all localStorage data
   };
 
   const handleAddStudent = (newStudent) => {
@@ -262,7 +262,7 @@ const App = () => {
           element={
             <LeaveManagement userType={userType} handleLogout={handleLogout} />
           }
-          when={loggedIn && userType === "teachingStaff"}
+          when={(loggedIn && userType === "teachingStaff") || "student"}
         />
 
         {/* Route for task management */}
@@ -271,7 +271,7 @@ const App = () => {
           element={
             <TaskManagement userType={userType} handleLogout={handleLogout} />
           }
-          when={loggedIn && userType === "teachingStaff"}
+          when={(loggedIn && userType === "teachingStaff") || "student"}
         />
 
         <Route path="*" element={<Navigate to="/" />} />

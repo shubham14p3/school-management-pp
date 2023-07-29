@@ -27,6 +27,9 @@ const Dashboard = ({ userType, handleLogout, children }) => {
                   <Link to="/teacher-notice">Teacher/Staff Notice</Link>
                 </li>
                 <li>
+                  <Link to="/student-notice">Student Notice</Link>
+                </li>
+                <li>
                   <Link to="/task-management">Task Management</Link>
                 </li>
               </>
@@ -41,18 +44,29 @@ const Dashboard = ({ userType, handleLogout, children }) => {
                 <li>
                   <Link to="/teacher-notice">Teacher/Staff Notice</Link>
                 </li>
+
+                <li>
+                  <Link to="/student-notice">Student Notice</Link>
+                </li>
+                <li>
+                  <Link to="/leave-management">Leave Management</Link>
+                </li>
                 <li>
                   <Link to="/task-management">Task Management</Link>
                 </li>
               </>
             )}
+            {userType === "student" && (
+              <>
+                <li>
+                  <Link to="/student-notice">Student Notice</Link>
+                </li>
+                <li>
+                  <Link to="/leave-management">Leave Management</Link>
+                </li>
+              </>
+            )}
             {/* Common tabs for all users */}
-            <li>
-              <Link to="/student-notice">Student Notice</Link>
-            </li>
-            <li>
-              <Link to="/leave-management">Leave Management</Link>
-            </li>
           </ul>
         </nav>
         {/* Show the "Logout" button only on the "/dashboard" page */}

@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 const ViewStudents = ({
   students,
   handleEditStudent,
-  handleDeleteStudent
+  handleDeleteStudent,
+  userType
 }) => {
   const navigate = useNavigate();
   const [filterText, setFilterText] = useState("");
@@ -56,7 +57,7 @@ const ViewStudents = ({
     navigate("/");
   };
   return (
-    <Dashboard userType="admin" handleLogout={handleLogout}>
+    <Dashboard userType={userType} handleLogout={handleLogout}>
       <div className="view-students-container">
         <h3>View Students</h3>
         <div className="filter-input">
