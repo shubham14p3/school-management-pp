@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "studentId": 2,
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "taskTitle": "Complete Assignment 1",
+    "taskDescription": "Finish reading chapter 3 and submit the assignment.",
+    "assignedBy": "Teacher A",
+    "deadline": "2023-08-15",
+    "reportedBy": "Teacher B"
+  },
+  {
+    "id": 2,
+    "studentId": 2,
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "taskTitle": "Prepare Presentation",
+    "taskDescription": "Create a presentation on the topic 'Global Warming'.",
+    "assignedBy": "Teacher C",
+    "deadline": "2023-08-20",
+    "reportedBy": "Teacher D"
+  }
+]

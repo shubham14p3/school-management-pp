@@ -15,6 +15,7 @@ import StudentNotice from "./component/StudentNotice";
 import TeacherNotice from "./component/TeacherNotice";
 import LeaveManagement from "./component/LeaveManagement";
 import TaskManagement from "./component/TaskManagement";
+import StudentTaskList from "./component/StudentTaskList";
 import LogoutModal from "./component/LogoutModal";
 import LogoutModalLogin from "./component/LogoutModalLogin";
 import studentsData from "./data/students.json";
@@ -22,6 +23,7 @@ import studentNoticesData from "./data/studentNotices.json";
 import teacherNoticesData from "./data/teacherNotices.json";
 import adminsData from "./data/admins.json";
 import teachingStaffData from "./data/teachingStaff.json";
+import taskManagementData from "./data/taskManagement.json";
 import leaveApplicationsData from "./data/leaveApplicationsData.json"; // Import the new JSON file
 import StudentLeaveApplication from "./component/StudentLeaveApplication"; // Import the student leave application component
 import TeacherLeaveApprovalList from "./component/TeacherLeaveApprovalList";
@@ -51,6 +53,7 @@ const App = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
+  const [studentTasks, setStudentTasks] = useState(taskManagementData || "");
 
   useEffect(() => {
     // When the component mounts, check if userType is present in localStorage and set it in state
@@ -348,10 +351,24 @@ const App = () => {
           }
         />
         {/* Route for task management */}
+
         <Route
           path="/task-management"
           element={
-            <TaskManagement userType={userType} handleLogout={handleLogout} />
+            userType === "student" ? (
+              <StudentTaskList tasks={studentTasks} userType={userType} />
+            ) : userType === "teachingStaff" || userType === "admin" ? (
+              <TaskManagement
+                userType={userType}
+                studentTasks={studentTasks}
+                students={students}
+                loggedInUser={loggedInUser}
+                admins
+                teachingStaff
+              />
+            ) : (
+              <Navigate to="/" />
+            )
           }
           when={
             (loggedIn && userType === "teachingStaff") || userType === "student"
