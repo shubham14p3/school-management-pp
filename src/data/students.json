@@ -28,11 +28,11 @@
   
   {
     "id": 3,
-    "username": "stud3",
-    "password": "stud",
+    "username": "a",
+    "password": "a",
     "role": "student",
-    "firstName": "Jane",
-    "lastName": "Smith",
+    "firstName": "Abhi",
+    "lastName": "Raj",
     "birthdate": "1998-03-25",
     "standard": "11",
     "division": "B",

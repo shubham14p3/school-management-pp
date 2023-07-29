@@ -5,10 +5,7 @@
     "firstName": "Alice",
     "lastName": "Smith",
     "taskTitle": "Complete Assignment 1",
-    "taskDescription": "Finish reading chapter 3 and submit the assignment.",
-    "assignedBy": "Teacher A",
-    "deadline": "2023-08-15",
-    "reportedBy": "Teacher B"
+    "assignedBy": "Teacher B"
   },
   {
     "id": 2,
@@ -17,8 +14,16 @@
     "lastName": "Smith",
     "taskTitle": "Prepare Presentation",
     "taskDescription": "Create a presentation on the topic 'Global Warming'.",
-    "assignedBy": "Teacher C",
-    "deadline": "2023-08-20",
-    "reportedBy": "Teacher D"
+    "assignedBy": "Teacher D"
+  }
+  ,
+  {
+    "id": 3,
+    "studentId": 3,
+    "firstName": "Abhi",
+    "lastName": "Raj",
+    "taskTitle": "Prepare Presentation",
+    "taskDescription": "Create a presentation on the topic 'Global Warming'.",
+    "assignedBy": "Teacher D"
   }
 ]

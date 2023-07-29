@@ -64,6 +64,9 @@ const Dashboard = ({ userType, handleLogout, children, loggedInUser }) => {
                 <li>
                   <Link to="/leave-management">Leave Management</Link>
                 </li>
+                <li>
+                  <Link to="/task-management">Task Management</Link>
+                </li>
               </>
             )}
           </ul>

@@ -29,7 +29,6 @@ const AddStudentForm = ({
   const [validationErrors, setValidationErrors] = useState({});
 
   const handleLogout = () => {
-    localStorage.removeItem("userType");
     navigate("/");
   };
   const handleChange = (e) => {

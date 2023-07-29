@@ -13,7 +13,6 @@ import AddStudentForm from "./component/AddStudentForm";
 import ViewStudents from "./component/ViewStudents";
 import StudentNotice from "./component/StudentNotice";
 import TeacherNotice from "./component/TeacherNotice";
-import LeaveManagement from "./component/LeaveManagement";
 import TaskManagement from "./component/TaskManagement";
 import StudentTaskList from "./component/StudentTaskList";
 import LogoutModal from "./component/LogoutModal";
@@ -53,7 +52,14 @@ const App = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
-  const [studentTasks, setStudentTasks] = useState(taskManagementData || "");
+  const [studentTasks, setStudentTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || taskManagementData
+  );
+
+  // Update localStorage when tasks change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(studentTasks));
+  }, [studentTasks]);
 
   useEffect(() => {
     // When the component mounts, check if userType is present in localStorage and set it in state
@@ -356,15 +362,20 @@ const App = () => {
           path="/task-management"
           element={
             userType === "student" ? (
-              <StudentTaskList tasks={studentTasks} userType={userType} />
+              <StudentTaskList
+                tasks={studentTasks}
+                userType={userType}
+                loggedInUser={loggedInUser}
+              />
             ) : userType === "teachingStaff" || userType === "admin" ? (
               <TaskManagement
                 userType={userType}
                 studentTasks={studentTasks}
+                setStudentTasks={setStudentTasks} // Pass the setStudentTasks function to TaskManagement
                 students={students}
                 loggedInUser={loggedInUser}
-                admins
-                teachingStaff
+                admins={admins}
+                teachingStaff={teachingStaff}
               />
             ) : (
               <Navigate to="/" />

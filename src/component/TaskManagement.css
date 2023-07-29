@@ -1,0 +1,47 @@
+/* TaskManagement.css */
+
+/* Custom styles for the table */
+.table {
+  margin-top: 20px;
+}
+
+.table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Custom styles for the form */
+form {
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+}
+
+form select,
+form input,
+form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Custom styles for the "Assigned By" input (disabled) */
+form input[disabled] {
+  background-color: #f2f2f2;
+  color: #666;
+}
