@@ -2,16 +2,16 @@
   {
     "id": 1,
     "studentId": 2,
-    "firstName": "Alice",
-    "lastName": "Smith",
+    "firstName": "Abhi",
+    "lastName": "Kumar",
     "taskTitle": "Complete Assignment 1",
     "assignedBy": "Teacher B"
   },
   {
     "id": 2,
     "studentId": 2,
-    "firstName": "Alice",
-    "lastName": "Smith",
+    "firstName": "Manisha",
+    "lastName": "Kumari",
     "taskTitle": "Prepare Presentation",
     "taskDescription": "Create a presentation on the topic 'Global Warming'.",
     "assignedBy": "Teacher D"

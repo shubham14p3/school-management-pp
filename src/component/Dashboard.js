@@ -29,9 +29,6 @@ const Dashboard = ({ userType, handleLogout, children, loggedInUser }) => {
                 <li>
                   <Link to="/student-notice">Student Notice</Link>
                 </li>
-                <li>
-                  <Link to="/task-management">Task Management</Link>
-                </li>
               </>
             )}
 
@@ -51,9 +48,6 @@ const Dashboard = ({ userType, handleLogout, children, loggedInUser }) => {
                 <li>
                   <Link to="/leave-management">Leave Management</Link>
                 </li>
-                <li>
-                  <Link to="/task-management">Task Management</Link>
-                </li>
               </>
             )}
             {userType === "student" && (
@@ -63,9 +57,6 @@ const Dashboard = ({ userType, handleLogout, children, loggedInUser }) => {
                 </li>
                 <li>
                   <Link to="/leave-management">Leave Management</Link>
-                </li>
-                <li>
-                  <Link to="/task-management">Task Management</Link>
                 </li>
               </>
             )}

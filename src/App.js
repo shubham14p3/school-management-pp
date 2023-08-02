@@ -6,9 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import LoginForm from "./component/LoginForm";
-import AdminDashboard from "./component/AdminDashboard";
-import TeachingStaffDashboard from "./component/TeachingStaffDashboard";
-import StudentDashboard from "./component/StudentDashboard";
+import Dashboard from "./component/Dashboard";
 import AddStudentForm from "./component/AddStudentForm";
 import ViewStudents from "./component/ViewStudents";
 import StudentNotice from "./component/StudentNotice";
@@ -247,19 +245,19 @@ const App = () => {
           element={
             loggedIn ? (
               userType === "admin" ? (
-                <AdminDashboard
+                <Dashboard
                   handleLogout={handleLogout}
                   userType={userType}
                   loggedInUser={loggedInUser}
                 />
               ) : userType === "teachingStaff" ? (
-                <TeachingStaffDashboard
+                <Dashboard
                   handleLogout={handleLogout}
                   userType={userType}
                   loggedInUser={loggedInUser}
                 />
               ) : userType === "student" ? (
-                <StudentDashboard
+                <Dashboard
                   handleLogout={handleLogout}
                   userType={userType}
                   loggedInUser={loggedInUser}
