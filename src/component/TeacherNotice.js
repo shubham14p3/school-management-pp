@@ -18,7 +18,7 @@ const TeacherNotice = ({ teacherNotices, userType, handleAddNewNotice }) => {
 
   // Function to handle opening the individual notice
   const handleOpenNotice = (noticeId) => {
-    const isAdmin = userType === "admin";
+    const isAdmin = userType;
     if (isAdmin) {
       const notice = teacherNotices.find((notice) => notice.id === noticeId);
       setSelectedNotice(notice);
